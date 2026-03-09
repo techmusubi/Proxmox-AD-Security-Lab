@@ -1,134 +1,176 @@
-# Proxmox-AD-Security-Lab
-Enterprise infrastructure lab built with Proxmox, Active Directory, Windows workstations, and Wazuh SIEM monitoring.
+# Proxmox Active Directory Security Lab
 
-# Proxmox AD Security Lab
+This repository documents the buildout of a simulated enterprise network environment designed for cybersecurity training and SOC (Security Operations Center) practice.
 
-## Overview
+The lab is hosted on a Proxmox virtualization platform and includes an internal firewall, Active Directory domain, multiple workstations, and planned SIEM monitoring.
 
-This project documents the build of an enterprise-style lab environment
-using Proxmox virtualization, Windows Server infrastructure, and Wazuh SIEM monitoring.
-
-The goal of this lab is to simulate a small corporate network and practice:
-
-• Active Directory administration  
-• Identity and access management  
-• Group Policy management  
-• Security monitoring with SIEM  
-• Incident detection and analysis  
+This environment is isolated and built for educational and security research purposes.
 
 ---
 
-## Host System
+# Lab Goals
 
-Hardware used for this lab:
+The goal of this lab is to replicate a small enterprise environment that can be used to practice:
 
-CPU  
-Ryzen 7 7800X3D
+- Active Directory administration
+- Network segmentation
+- Firewall configuration
+- Security monitoring
+- SIEM deployment
+- Attack simulation and detection
 
-Memory  
-32GB DDR5
-
-Hypervisor  
-Proxmox VE
-
----
-
-## Virtual Infrastructure
-
-The following virtual machines were deployed:
-
-```
-DC01 – Domain Controller
-IT1 – Workstation
-IT2 – Workstation
-MGR – Manager workstation
-SEC – Secretary workstation
-CTR – Controller workstation
-ACC – Accountant workstation
-CR1 – Customer Rep workstation
-CR2 – Customer Rep workstation
-HR1 – HR workstation
-HR2 – HR workstation
-```
+The lab will eventually be used to simulate real-world security scenarios for blue team training.
 
 ---
 
-## Active Directory Domain
+# Infrastructure
 
-Domain Name
+Hypervisor
 
-```
-geeksorg.local
-```
+Proxmox VE is used as the virtualization platform hosting all virtual machines.
 
-Domain Controller
+Firewall
 
-```
-DC01
-10.10.10.10
-```
+The network is segmented using a pfSense firewall which separates the internal enterprise network from external connectivity.
 
-Installed Roles
+Domain Services
 
-• Active Directory Domain Services  
-• DNS Server  
+Windows Server 2022 is used as the Domain Controller for Active Directory.
+
+Workstations
+
+Multiple Windows 11 virtual machines simulate employees across different departments within an organization.
 
 ---
 
-## Organizational Unit Structure
+# Virtual Machine Layout
 
-```
-geeksorg.local
-│
-├── Servers
-│   ├── DomainControllers
-│   ├── FileServers
-│   ├── WSUS
-│   └── PrintServers
-│
-└── Workstations
-    ├── IT
-    ├── Management
-    ├── Finance
-    ├── HR
-    └── CustomerService
-```
+The lab simulates multiple departments within a small company.
 
----
+DC01 – Domain Controller  
+pfSense – Firewall  
 
-## Lab Progress
+IT1 – IT Department  
+IT2 – IT Department  
 
-Completed
+MGR – Management  
+SEC – Security  
 
-• Installed Proxmox VE hypervisor  
-• Created Windows 11 master image  
-• Cloned 10 workstation virtual machines  
-• Installed Windows Server 2022 domain controller  
-• Deployed Active Directory Domain Services  
-• Configured DNS  
-• Created OU structure  
-• Created user accounts for departments  
+CTR – Customer Service  
+ACC – Accounting  
 
-In Progress
+CR1 – Customer Relations  
+CR2 – Customer Relations  
 
-• Workstation domain join  
-• File server deployment  
-• WSUS patch management  
+HR1 – Human Resources  
+HR2 – Human Resources  
 
-Planned
-
-• Wazuh SIEM deployment  
-• Security event monitoring  
-• Attack simulation scenarios  
+These systems allow for testing of domain authentication, group policies, user management, and security monitoring.
 
 ---
 
-## Future Security Monitoring
+# Network Architecture
 
-This lab will integrate Wazuh SIEM to monitor:
+The environment uses a segmented network to simulate a real enterprise infrastructure.
 
-• Windows authentication events  
-• Privilege escalation attempts  
-• Unauthorized file access  
-• Brute force login attempts  
-• Insider threat scenarios
+Internet  
+│  
+Firewall (pfSense)  
+│  
+Internal Network  
+10.10.10.0/24  
+
+Core infrastructure:
+
+10.10.10.1 – Firewall (Gateway)  
+10.10.10.10 – Domain Controller  
+10.10.10.20 – WSUS Server (planned)  
+10.10.10.30 – File Server (planned)  
+10.10.10.40 – Print Server (planned)  
+10.10.10.50 – SIEM Server (planned)  
+10.10.10.60+ – Workstations  
+
+All internal machines communicate through the firewall gateway.
+
+---
+
+# Active Directory Design
+
+The domain structure is organized using Organizational Units (OUs) to simulate departments within an enterprise environment.
+
+Workstations  
+• IT  
+• Management  
+• Finance  
+• HR  
+• CustomerService  
+
+Servers  
+• DomainControllers  
+• FileServers  
+• WSUS  
+• PrintServers  
+
+Users were created within each department to simulate real organizational accounts.
+
+---
+
+# Current Progress
+
+Completed:
+
+- Proxmox hypervisor deployment
+- Virtual network segmentation
+- pfSense firewall deployment
+- Internal network architecture design
+- Windows Server 2022 domain controller
+- Active Directory domain setup
+- Organizational Unit structure
+- Departmental user accounts
+- Windows workstation VM cloning
+
+---
+
+# Planned Enhancements
+
+The next stages of this lab include expanding the security monitoring capabilities.
+
+Planned additions:
+
+- Wazuh SIEM deployment
+- Windows event log forwarding
+- Security alert monitoring
+- Attack simulations
+- Detection engineering
+- Group Policy security hardening
+- SOC investigation workflows
+
+---
+
+# Screenshots
+
+Proxmox Infrastructure
+
+![Proxmox Infrastructure](screenshots/proxmox-infrastructure.png)
+
+pfSense Firewall
+
+![pfSense Firewall](screenshots/pfsense-console.png)
+
+Active Directory Structure
+
+![Active Directory](screenshots/ad-structure.png)
+
+Domain Controller Network Configuration
+
+![Domain Controller Network](screenshots/dc-network.png)
+
+Network Connectivity Test
+
+![Network Test](screenshots/network-test.png)
+
+---
+
+# Future Development
+
+This repository will continue to document the deployment of additional infrastructure and security monitoring tools as the lab evolves into a fully functional SOC training environment.
