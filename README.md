@@ -151,23 +151,23 @@ Planned additions:
 
 Proxmox Infrastructure
 
-![Proxmox Infrastructure](screenshots/proxmox-infrastructure.png)
+![Proxmox Infrastructure](assets/proxmox-infrastructure.png)
 
 pfSense Firewall
 
-![pfSense Firewall](screenshots/pfsense-console.png)
+![pfSense Firewall](assets/pfsense-console.png)
 
 Active Directory Structure
 
-![Active Directory](screenshots/ad-structure.png)
+![Active Directory](assets/ad-structure.png)
 
 Domain Controller Network Configuration
 
-![Domain Controller Network](screenshots/dc-network.png)
+![Domain Controller Network](assets/dc-network.png)
 
 Network Connectivity Test
 
-![Network Test](screenshots/network-test.png)
+![Network Test](assets/network-test.png)
 
 ---
 
