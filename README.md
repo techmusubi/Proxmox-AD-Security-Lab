@@ -491,3 +491,54 @@ This configuration will be used in later stages of the lab when deploying shared
 # Future Development
 
 This repository will continue to document the deployment of additional infrastructure and security monitoring tools as the lab evolves into a fully functional SOC training environment.
+
+---
+
+---
+
+# Automation Scripts
+
+Several PowerShell scripts were created to automate common administrative tasks within the lab environment.
+
+These scripts improve deployment speed and demonstrate automation techniques commonly used by system administrators and security engineers.
+
+## Domain Join Automation
+
+A script was used to automate workstation configuration including:
+
+- Static IP assignment
+- DNS configuration
+- Computer renaming
+- Domain joining
+
+Script location:
+
+```
+Scripts/domain-join.ps1
+```
+
+---
+
+## RBAC Group Creation
+
+Department security groups were created automatically using PowerShell.
+
+Script location:
+
+```
+Scripts/create-rbac-groups.ps1
+```
+
+---
+
+## User Assignment to Security Groups
+
+Users were assigned to their department groups using PowerShell automation.
+
+Script location:
+
+```
+Scripts/assign-users-to-groups.ps1
+```
+
+These scripts demonstrate how administrative tasks can be automated when deploying or managing Active Directory environments.
