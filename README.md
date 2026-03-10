@@ -45,17 +45,36 @@ Multiple Windows 11 virtual machines simulate employees across different departm
 
 # Network Topology
 
-Internet
-   │
-pfSense Firewall
-   │
-10.10.10.0/24
-   │
-├── DC01 (Domain Controller)
-├── Workstations
-├── FS01 (Planned)
-├── WSUS01 (Planned)
-└── SIEM (Planned)
+```
+                Internet
+                    │
+                    │
+              pfSense Firewall
+                    │
+                    │
+            Internal Network (10.10.10.0/24)
+                    │
+        ┌───────────┼───────────┐
+        │           │           │
+      DC01       Workstations   Servers
+  (Domain Ctrl)                 (Planned)
+        │           │           │
+        │           │           ├─ FS01  (File Server)
+        │           │           ├─ WSUS01 (WSUS Server)
+        │           │           ├─ PRN01 (Print Server)
+        │           │           └─ SIEM01 (Wazuh SIEM)
+        │           │
+        │           ├─ IT1
+        │           ├─ IT2
+        │           ├─ MGR
+        │           ├─ SEC
+        │           ├─ CTR
+        │           ├─ ACC
+        │           ├─ CR1
+        │           ├─ CR2
+        │           ├─ HR1
+        │           └─ HR2
+```
 
 ---
 
