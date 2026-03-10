@@ -43,6 +43,22 @@ Multiple Windows 11 virtual machines simulate employees across different departm
 
 ---
 
+# Network Topology
+
+Internet
+   │
+pfSense Firewall
+   │
+10.10.10.0/24
+   │
+├── DC01 (Domain Controller)
+├── Workstations
+├── FS01 (Planned)
+├── WSUS01 (Planned)
+└── SIEM (Planned)
+
+---
+
 # Virtual Machine Layout
 
 The lab simulates multiple departments within a small company.
@@ -267,7 +283,7 @@ $mask      = 24
 
 $domain    = "geeksorg.local"
 $user      = "GEEKSORG\Administrator"
-$pass      = '92Home$D@rt'
+$pass      = 'REDACTED'
 
 # --- 2. CHANGE IPv4 SETTINGS ---
 Write-Host "Step 1: Setting IP to $ipAddress and DNS to $dns..." -ForegroundColor Cyan
@@ -314,7 +330,7 @@ This establishes the foundation required for the next stages of the lab, includi
 - Wazuh SIEM monitoring
 - attack simulation
   
-## Screenshots
+## ## Domain Join Screenshots
 
 ### Proxmox SPICE Display Configuration
 
@@ -342,7 +358,7 @@ Example of a Windows workstation successfully joined to the `geeksorg.local` Act
 
 ### Workstations Visible in Active Directory
 
-After joining the domain, all workstations appear in **Active Directory Users and Computers**, allowing admi
+After joining the domain, all workstations appear in **Active Directory Users and Computers**, allowing administrators to organize systems into Organizational Units (OUs) and apply Group Policy.
 
 ---
 
