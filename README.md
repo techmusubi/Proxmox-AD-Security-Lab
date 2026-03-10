@@ -381,6 +381,113 @@ After joining the domain, all workstations appear in **Active Directory Users an
 
 ---
 
+# Role-Based Access Control (RBAC)
+
+## Objective
+
+After deploying Active Directory and joining workstations to the domain, the next step was implementing **Role-Based Access Control (RBAC)** using Active Directory security groups.
+
+RBAC simplifies permission management by assigning permissions to groups rather than individual users. This approach reflects how enterprise environments manage identity and access control.
+
+---
+
+## Department Security Groups
+
+Security groups were created to represent each department within the organization.
+
+These groups will later be used to control access to shared resources such as file servers and internal applications.
+
+Example naming convention:
+
+```
+GG_IT
+GG_HR
+GG_FINANCE
+GG_CUSTOMERSERVICE
+GG_MANAGEMENT
+GG_SECURITY
+```
+
+Group configuration:
+
+```
+Group Scope: Global
+Group Type: Security
+```
+
+Global security groups are commonly used in enterprise environments to represent departments or roles.
+
+---
+
+## User Assignment
+
+Users were assigned to their respective department groups using PowerShell.
+
+Example command used in the lab:
+
+```powershell
+Add-ADGroupMember -Identity "GG_IT" -Members "admin","joe"
+```
+
+This approach allows administrators to manage permissions at the group level instead of assigning access directly to individual users.
+
+---
+
+## Enterprise RBAC Model
+
+The access control model used in this lab follows a simplified enterprise design:
+
+```
+User
+ ↓
+Department Security Group
+ ↓
+Resource Access
+```
+
+This structure improves scalability and reduces administrative overhead when managing permissions across many users and systems.
+
+---
+
+## Screenshots
+
+### Department Security Groups
+
+Security groups representing departments within the organization.
+
+![Security Groups](assets/security-groups.png)
+
+---
+
+### Group Membership Example
+
+Example of users assigned to the IT department security group.
+
+![Group Membership](assets/group-membership.png)
+
+---
+
+### Workstations Organized by Department
+
+Workstations placed into Organizational Units based on department.
+
+![Workstation OUs](assets/workstation-ous.png)
+
+---
+
+## Result
+
+The Active Directory environment now includes a functional **RBAC structure** with department-based security groups and users assigned to the appropriate roles.
+
+This configuration will be used in later stages of the lab when deploying shared resources such as:
+
+- File Servers
+- Department file shares
+- Access-controlled network resources
+- Security monitoring and auditing
+
+---
+
 # Future Development
 
 This repository will continue to document the deployment of additional infrastructure and security monitoring tools as the lab evolves into a fully functional SOC training environment.
