@@ -171,6 +171,151 @@ Network Connectivity Test
 
 ---
 
+# Workstations Domain Join
+
+## Objective
+
+After deploying the Domain Controller (`DC01`) and configuring the internal network using `pfSense`, the next phase of the lab was integrating Windows workstations into the Active Directory domain.
+
+Joining endpoints to the domain enables centralized authentication, Group Policy enforcement, and role-based access control across the simulated enterprise environment.
+
+---
+
+# Lab Environment
+
+## Domain Controller
+
+```
+Hostname: DC01
+OS: Windows Server 2022
+Role: Active Directory Domain Services
+IP Address: 10.10.10.10
+Domain: geeksorg.local
+```
+
+---
+
+## Network
+
+```
+Network: 10.10.10.0/24
+Gateway: pfSense (10.10.10.1)
+DNS Server: DC01 (10.10.10.10)
+```
+
+The Domain Controller acts as the internal DNS server, which is required for proper Active Directory functionality.
+
+---
+
+# Workstations
+
+The following Windows 11 systems were deployed from a master template and represent various departments in the simulated organization.
+
+```
+IT1
+IT2
+MGR
+SEC
+CTR
+ACC
+CR1
+CR2
+HR1
+HR2
+```
+
+These machines simulate a corporate workstation environment and will later be used for testing:
+
+- Group Policy
+- File Server permissions
+- Patch management
+- Security monitoring
+
+---
+
+# Proxmox Console Optimization
+
+To improve console responsiveness when interacting with Windows virtual machines, the VM display configuration was updated.
+
+```
+Display: SPICE
+Video Adapter: QXL
+Video Memory: 32 MB
+```
+
+Additionally, `virt-viewer` was installed on the management workstation to connect directly to VM consoles using SPICE, providing significantly better performance than the default Proxmox web console.
+
+---
+
+# Automated Domain Join Script
+
+To streamline the process of configuring multiple workstations, a PowerShell script was used to automate:
+
+- Static IP assignment
+- DNS configuration
+- Computer renaming
+- Domain join
+
+```
+# --- 1. GET USER INPUT ---
+$octet     = Read-Host "Enter the last digit for the IP (e.g., 62)"
+$PCName    = Read-Host "Enter the NEW computer name (e.g., IT2)"
+$ipAddress = "10.10.10.$octet"
+$gateway   = "10.10.10.1"
+$dns       = "10.10.10.10"
+$mask      = 24
+
+$domain    = "geeksorg.local"
+$user      = "GEEKSORG\Administrator"
+$pass      = '92Home$D@rt'
+
+# --- 2. CHANGE IPv4 SETTINGS ---
+Write-Host "Step 1: Setting IP to $ipAddress and DNS to $dns..." -ForegroundColor Cyan
+$adapter = Get-NetAdapter | Where-Object { $_.Status -eq "Up" } | Select-Object -First 1
+
+New-NetIPAddress -InterfaceIndex $adapter.InterfaceIndex -IPAddress $ipAddress -PrefixLength $mask -DefaultGateway $gateway -Confirm:$false
+Set-DnsClientServerAddress -InterfaceIndex $adapter.InterfaceIndex -ServerAddresses $dns
+
+ipconfig /flushdns
+ipconfig /registerdns
+
+# --- 3. CHANGE PC NAME & JOIN DOMAIN ---
+Write-Host "Step 2: Renaming to $PCName and Joining $domain..." -ForegroundColor Cyan
+
+$securePass = ConvertTo-SecureString $pass -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential ($user, $securePass)
+
+# --- 4. FINAL DOMAIN JOIN & RESTART ---
+Add-Computer -DomainName $domain -NewName $PCName -Credential $creds -Restart -Force -Verbose
+```
+
+This script significantly reduced manual configuration steps when deploying multiple workstation systems.
+
+---
+
+# Verification
+
+After joining the domain, the workstations appeared in **Active Directory Users and Computers** under the default `Computers` container.
+
+Administrators can later move these machines into Organizational Units (OUs) to apply Group Policy and departmental access controls.
+
+---
+
+# Result
+
+All workstation systems were successfully joined to the `geeksorg.local` domain.
+
+This establishes the foundation required for the next stages of the lab, including:
+
+- Organizational Unit structure
+- Security group management
+- File server deployment
+- WSUS patch management
+- Wazuh SIEM monitoring
+- attack simulation
+
+---
+
 # Future Development
 
 This repository will continue to document the deployment of additional infrastructure and security monitoring tools as the lab evolves into a fully functional SOC training environment.
