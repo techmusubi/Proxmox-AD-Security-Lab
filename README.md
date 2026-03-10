@@ -313,6 +313,36 @@ This establishes the foundation required for the next stages of the lab, includi
 - WSUS patch management
 - Wazuh SIEM monitoring
 - attack simulation
+  
+## Screenshots
+
+### Proxmox SPICE Display Configuration
+
+The VM display settings were changed to use **SPICE with QXL** to improve console performance when interacting with Windows virtual machines.
+
+![Proxmox SPICE Display](assets/proxmox-spice-display.png)
+
+---
+
+### virt-viewer Console
+
+The `virt-viewer` client was used to connect directly to VM consoles using the SPICE protocol, providing a smoother experience than the default Proxmox web console.
+
+![virt-viewer console](assets/virt-viewer-console.png)
+
+---
+
+### Workstation Joined to Domain
+
+Example of a Windows workstation successfully joined to the `geeksorg.local` Active Directory domain.
+
+![Domain Joined Workstation](assets/domain-joined-workstation.png)
+
+---
+
+### Workstations Visible in Active Directory
+
+After joining the domain, all workstations appear in **Active Directory Users and Computers**, allowing admi
 
 ---
 
